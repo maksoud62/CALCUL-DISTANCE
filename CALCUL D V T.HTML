@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur Distance-Vitesse-Temps</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1B263B;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            color: #1B263B;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin: auto;
+        }
+        input, select, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: green;
+            color: white;
+        }
+        button {
+            background-color: #1B263B;
+            color: yellow;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0D1B2A;
+        }
+    </style>
+</head>
+<body>
+    <h2>Calculateur Distance - Vitesse - Temps</h2>
+    <div class="container">
+        <label for="calcul">Que voulez-vous calculer ?</label>
+        <select id="calcul" onchange="changerChamps()">
+            <option value="distance">Distance</option>
+            <option value="vitesse">Vitesse</option>
+            <option value="temps">Temps</option>
+        </select>
+
+        <div id="inputs">
+            <input type="number" id="valeur1" placeholder="Vitesse (km/h)" required>
+            <input type="number" id="valeur2" placeholder="Temps (h)" required>
+        </div>
+        
+        <button onclick="calculer()">Calculer</button>
+        <h3 id="resultat"></h3>
+    </div>
+
+    <script>
+        function changerChamps() {
+            let typeCalcul = document.getElementById("calcul").value;
+            let inputs = document.getElementById("inputs");
+            let valeur1 = document.getElementById("valeur1");
+            let valeur2 = document.getElementById("valeur2");
+            
+            if (typeCalcul === "distance") {
+                valeur1.placeholder = "Vitesse (km/h)";
+                valeur2.placeholder = "Temps (h)";
+            } else if (typeCalcul === "vitesse") {
+                valeur1.placeholder = "Distance (km)";
+                valeur2.placeholder = "Temps (h)";
+            } else {
+                valeur1.placeholder = "Distance (km)";
+                valeur2.placeholder = "Vitesse (km/h)";
+            }
+        }
+
+        function calculer() {
+            let typeCalcul = document.getElementById("calcul").value;
+            let valeur1 = parseFloat(document.getElementById("valeur1").value);
+            let valeur2 = parseFloat(document.getElementById("valeur2").value);
+            let resultat = "";
+
+            if (isNaN(valeur1) || isNaN(valeur2) || valeur1 <= 0 || valeur2 <= 0) {
+                resultat = "Veuillez entrer des valeurs valides";
+            } else {
+                if (typeCalcul === "distance") {
+                    resultat = "Distance: " + (valeur1 * valeur2).toFixed(2) + " km";
+                } else if (typeCalcul === "vitesse") {
+                    resultat = "Vitesse: " + (valeur1 / valeur2).toFixed(2) + " km/h";
+                } else {
+                    resultat = "Temps: " + (valeur1 / valeur2).toFixed(2) + " h";
+                }
+            }
+
+            document.getElementById("resultat").innerText = resultat;
+        }
+    </script>
+</body>
+</html>
